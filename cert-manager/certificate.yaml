@@ -1,0 +1,14 @@
+# certificate.yaml
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: mydomain-com-cert
+spec:
+  secretName: mydomain-com-tls # <- Secret resource used to store certificate
+  issuerRef:
+    name: letsencrypt-acme # <- name of the issuer, created before
+    kind: ClusterIssuer
+  commonName: '*.mydomain.com'
+  dnsNames:
+  - mydomain.com
+  - '*.mydomain.com'

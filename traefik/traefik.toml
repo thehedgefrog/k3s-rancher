@@ -1,0 +1,30 @@
+# traefik.toml
+logLevel = "info"
+defaultEntryPoints = ["http","https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+  compress = true
+    [entryPoints.http.auth.forward]
+    address = "https://authelia:9091/api/verify?rd=https://login.mydomain.com"
+    trustForwardHeader = true
+    authResponseHeaders = ["Remote-User", "Remote-Groups"]
+  [entryPoints.https]
+  address = ":443"
+  compress = true
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/ssl/tls.crt"
+      KeyFile = "/ssl/tls.key"
+  [entryPoints.prometheus]
+  address = ":9100"
+[ping]
+entryPoint = "http"
+[kubernetes]
+  [kubernetes.ingressEndpoint]
+  publishedService = "kube-system/traefik"
+[traefikLog]
+  format = "json"
+[metrics]
+  [metrics.prometheus]
+    entryPoint = "prometheus"
