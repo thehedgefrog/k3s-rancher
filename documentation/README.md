@@ -1,8 +1,20 @@
-# Documentation
+# Documentation <!-- omit in toc -->
 
 This guide should be seen as a general reference, not a complete walkthrough.  It assumes you have a good understanding of Docker, Docker-Compose and running several Docker containers at once.  It also assumes you are well-versed in networking and understand the fundamental concepts.
 
-*table of contents here*
+### Table of contents <!-- omit in toc -->
+
+- [Basic Considerations](#basic-considerations)
+  - [Hardware](#hardware)
+  - [Operating System](#operating-system)
+  - [High Availability](#high-availability)
+- [Why do you...?](#why-do-you)
+  - [Why K3s](#why-k3s)
+  - [Why Rancher](#why-rancher)
+- [What I am using](#what-i-am-using)
+  - [Hardware](#hardware-1)
+  - [Resources](#resources)
+- [Architecture](#architecture)
 
 ## Basic Considerations
 
@@ -26,3 +38,17 @@ Also, it perfectly integrates with Rancher - which brings us to...
 OMG, it's a GUI, it's not the right way, you need to use the command line for everything else you're not truly learning Kubernetes...
 
 I know.  I don't work with K8s, I don't need the skill for work, I'm doing this for fun.  As I work on this project, I'm learning the CLI way little by little.  Rancher just works.  It's easy to use and consolidates everything, and as I'm doing it on my free time, it's perfect for me.  Plus, let's be real, no business runs CLI only, they all use tools (many use Rancher, actually) and they almost never run it on-prem as we are.
+
+## What I am using
+### Hardware
+I run various hardware, not all at the same time, depending on what I do.  The hardware in use for this cluster will definitely change as I go, and I will keep an up-to-date list [here](cluster-hardware.md).
+
+### Resources
+I have a MySQL database on the NAS, that I really hope to transition permanently out of its role in the cluster to have more of a semblance of HA.  The NAS is also the main NFS target for storage.
+
+## Architecture
+We'll use a 3 node configuration.  Two of those will be servers, one will be a worker node.  The servers are addressable, ie. they will get assigned workloads and also function as workers.  Since we're using an external database, the minimum amount of servers is 2, and the minimum amount of non-server worker nodes is 0.
+
+We need an external SQL database, in our case it'll be a MariaDB MySQL database.  The database can't run within your cluster.
+
+K3s is flexible, so you can add more servers and nodes as you grow.

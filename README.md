@@ -12,6 +12,8 @@ I'm pretty tech-oriented, and while I'm a K8s novice, I'm pretty good with Docke
 
 This guide should be seen as a general reference, not a walkthrough.  It assumes you have a good understanding of Docker, Docker-Compose and running several Docker containers at once.  It also assumes you are well-versed in networking and understand the fundamental concepts.
 
+### [Full documentation](documentation/README.md)
+
 ## Objectives
 - To learn K8s and their deployment.
 - To run a stack of home services on Kubernetes via an HA K3s cluster.
