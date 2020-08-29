@@ -16,3 +16,9 @@ Worker Node 1
 
 Worker Node 2 (OFF unless needed)
 - Intel Core i7-2600k, 16GB RAM, 1TB HDD
+
+## Network hardware
+Everything UI Unifi.  Not the best for everyone, but it does what I need.
+
+## Workstations
+Custom-built PC (this is the way) and, erm... several ThinkPad laptops.  Address concerns to /r/ThinkPad.
