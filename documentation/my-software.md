@@ -11,7 +11,7 @@ Windows Terminal v1.3, mainly on WSL2.  I'm using zsh via Oh My Zsh, themed with
 VSCode everything, no questions.
 
 ### Browsers
-Chrome, Firefox, Vivaldi, Brave, even the new Edge...  I can't find one that meets all my needs.
+Firefox, Vivaldi, Brave, the new Edge... even Chrome once in a while.  I can't find one that meets all my needs.
 
 ### Mobile OS
 Primarily Android 10, but I have an iPhone for work and another to run iOS 14 Beta.
