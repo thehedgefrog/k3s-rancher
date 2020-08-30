@@ -6,7 +6,7 @@ defaultEntryPoints = ["http","https"]
   address = ":80"
   compress = true
     [entryPoints.http.auth.forward]
-    address = "https://authelia:9091/api/verify?rd=https://login.mydomain.com"
+    address = "https://authelia:9091/api/verify?rd=https://authelia.mydomain.com"
     trustForwardHeader = true
     authResponseHeaders = ["Remote-User", "Remote-Groups"]
   [entryPoints.https]
