@@ -48,14 +48,14 @@ This guide should be seen as a general reference, not a complete walkthrough.  I
     - [11.3.1. Architecture](#1131-architecture)
     - [11.3.2. The Configuration File](#1132-the-configuration-file)
     - [11.3.3. Installing Authelia in Rancher](#1133-installing-authelia-in-rancher)
-    - [Putting services behind Authelia](#putting-services-behind-authelia)
-      - [Traefik Configuration](#traefik-configuration)
-      - [Ingress Configuration](#ingress-configuration)
-- [Reverse Proxying](#reverse-proxying)
-  - [Create the Service](#create-the-service)
-  - [Create the Ingress](#create-the-ingress)
-- [Conclusion](#conclusion)
-  - [How can I help?](#how-can-i-help)
+    - [11.3.4. Putting services behind Authelia](#1134-putting-services-behind-authelia)
+      - [11.3.4.1. Traefik Configuration](#11341-traefik-configuration)
+      - [11.3.4.2. Ingress Configuration](#11342-ingress-configuration)
+- [12. Reverse Proxying](#12-reverse-proxying)
+  - [12.1. Create the Service](#121-create-the-service)
+  - [12.2. Create the Ingress](#122-create-the-ingress)
+- [13. Conclusion](#13-conclusion)
+  - [13.1. How can I help?](#131-how-can-i-help)
 
 # 1. Basic Considerations
 
@@ -352,10 +352,10 @@ Go back to your workloads, and click Deploy.  Start with one pod, and use `authe
 
 Next step, you guessed it, is to create an ingress.  Start by duplicating your certificate into the authelia namespace as [per step 10.5.2](#1052-production).  Then, in Load Balancing and Add Ingress, reproduce what we did with the demo under the same 10.5.2 step.  You now have your login point for our whole cluster's SSO.  Isn't that awesome?
 
-### Putting services behind Authelia
+### 11.3.4. Putting services behind Authelia
 It's great to have SSO, but you have to make sure your deployments are actually protected by it.  Right now, they're not, but let's put our demo app behind it.  We'll use a simple set of annotations in the ingress to make sure the backend (which is actually Traefik 1.7) knows to send the request to Authelia first.  When you log in, you won't have to re-authenticate for the duration of your session in the configuration file.  It's therefore important to use an incognito window when you test, and close it after, to delete that session cookie.
 
-#### Traefik Configuration
+#### 11.3.4.1. Traefik Configuration
 We'll need to add a few lines in the Traefik TOML config file.  Go to your *System* project, and access the config maps under Resources - Config.  Edit the `traefik` line that has a `traefik.toml` key.  You can edit it directly in the box, or copy-paste.  Here is what needs to be added:
 ```toml
     [entryPoints.http.auth.forward]
@@ -365,7 +365,7 @@ We'll need to add a few lines in the Traefik TOML config file.  Go to your *Syst
 ```
 To see how it fits in the actual file, refer to [my example config](/./traefik/traefik.toml).
 
-#### Ingress Configuration
+#### 11.3.4.2. Ingress Configuration
 Go back to your demo ingress, click Edit in the menu, and expand *Labels & Annotations*.  We'll add the following 5 annotations (**not labels!**), assuming your Authelia domain is `https://authelia.mydomain.com` :
 ```
 kubernetes.io/ingress.class                         =   traefik
@@ -378,17 +378,17 @@ A cool Rancher trick: if you copy this as-is to your clipboard, you can click Ad
 
 Now, test your demo service again by opening a private browser window and going to `http://demo.mydomain.com`.  You'll notice you're redirected to HTTPS, and you'll hit Authelia.  After you login, you'll be seemlessly redirected to the demo app.  How cool is that?
 
-# Reverse Proxying
+# 12. Reverse Proxying
 A very cool trick with our setup is that we can very easily reverse proxy to services outside of our cluster, while leveraging our SSL cert and Authelia SSO.  Even better, as a reverse proxy, you can go straight to a *specific port* from your subdomain!  Let's say you have a NAS that you really don't want to expose to the internet because you don't trust its login page.  You'll be used to access your NAS via IP, let's assume `https://10.0.1.10:8080`.  How nice would it be to use `https://nas.mydomain.com` from anywhere in the world without VPN and be protected via secure 2FA, with the bonus of having an actual SSL cert as opposed to your NAS's self-signed one?
 
-## Create the Service
+## 12.1. Create the Service
 Within your Default project, click *Service Discovery* in the sub-navbar, then Add Record.  We'll name it `nas-redirect` and create a new namespace, `outside-redirects`, where we'll put all the records and ingresses to the outside.  Keep the Resolves To, and put your NAS IP, `10.0.1.10` **without the port** in the Target IP box.  Then, click the small *Show advanced options* link.
 
 You'll want to select *Headless Service* in the dropdown, and then Add Port and publish the appropriate one, `8080` in our example.
 
 Leave everything else as-is and save.
 
-## Create the Ingress
+## 12.2. Create the Ingress
 We'll create a new ingress named `nas-redirect` in our previous `outside-redirects` namespace and specify our `https://nas.mydomain.com` hostname.
 
 In the Rules, we'll need to remove the Workload already there with the `-` button and add a Service instead.  Choose our `nas-redirect` in the dropdown, and our `8080` port in the other dropdown.
@@ -397,10 +397,10 @@ The rest is the same, you'll select your SSL cert, and put the annotations in.
 
 Test it, you should have a functional redirect!
 
-# Conclusion
+# 13. Conclusion
 Subsequent versions of this tutorial will have some examples of more deployments: download services, media servers, databases, monitoring, dashboards, and so on.  Stay tuned!  For now, that concludes the guide and should give you a pretty good big-picture understanding of Rancher and how to deploy stuff on it.
 
-## How can I help?
+## 13.1. How can I help?
 If you've enjoyed this guide, I'm really happy!  Please feel free to fork, open pull requests and/or issues, and adapt it to what you want to do.  If I messed up somewhere, please tell me!
 
 Please enable notifications so you get notified when I update the guide, as there's more coming for sure.
