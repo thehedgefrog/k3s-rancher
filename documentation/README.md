@@ -54,13 +54,13 @@ This guide should be seen as a general reference, not a complete walkthrough.  I
 - [12. Reverse Proxying](#12-reverse-proxying)
   - [12.1. Create the Service](#121-create-the-service)
   - [12.2. Create the Ingress](#122-create-the-ingress)
-- [13. Conclusion](#13-conclusion)
+- [13. Conclusion... for now](#13-conclusion-for-now)
   - [13.1. How can I help?](#131-how-can-i-help)
 
 # 1. Basic Considerations
 
 ## 1.1. Hardware
-K3s will run on surprisingly minimal hardware.  However for best results, you'll want at least 2GB of RAM and a 1.5GHz CPU.  While it is perfectly possible to replicate this guide on ARM, we are focusing on x64 here - besides, there are more tutorials and guides around touching on K8s on ARM.
+K3s will run on surprisingly minimal hardware.  However for best results, you'll want at least 2GB of RAM and a 1.5GHz CPU.  While it is perfectly possible to replicate this guide on ARM, we are focusing on x64 here - besides, there are more tutorials and guides around K8s on ARM.
 
 ## 1.2. Operating System
 We'll work with Ubuntu 18.04 LTS here, as it is the recommended OS by Rancher Labs to run K3s.  While it appears K3os is a purpose built OS for K3s, I could never have it work right (and trust me, I tried.)
@@ -79,7 +79,7 @@ Unless you have a static IP, you will need to setup dynamic DNS, so that your ma
 # 2. Why do you...?
 
 ## 2.1. Why K3s
-It's stupid easy.  It really is.  With the k3sup (pronounced ketchup) script by Alex Ellis, deploying a K3s HA-style cluster takes, and that's a literal and measured figure, 120 seconds.  It's also light, doesn't take up much resources, and runs on pretty much everything.
+It's stupid easy.  It really is.  With the k3sup (pronounced ketchup) script by Alex Ellis, deploying a K3s HA-style cluster takes 120 seconds.  It's also light, doesn't take up much resources, and runs on pretty much everything.
 
 Also, it perfectly integrates with Rancher - which brings us to...
 
@@ -397,7 +397,7 @@ The rest is the same, you'll select your SSL cert, and put the annotations in.
 
 Test it, you should have a functional redirect!
 
-# 13. Conclusion
+# 13. Conclusion... for now
 Subsequent versions of this tutorial will have some examples of more deployments: download services, media servers, databases, monitoring, dashboards, and so on.  Stay tuned!  For now, that concludes the guide and should give you a pretty good big-picture understanding of Rancher and how to deploy stuff on it.
 
 ## 13.1. How can I help?
@@ -405,7 +405,7 @@ If you've enjoyed this guide, I'm really happy!  Please feel free to fork, open 
 
 Please enable notifications so you get notified when I update the guide, as there's more coming for sure.
 
-If you've really, really enjoyed it and would like to 
+If you've really, really enjoyed it and would like to
 [buy me a coffee](https://www.buymeacoffee.com/thehedgefrog), it would be very nice of you!
 
 Thank you so much for taking the time to read this to the end, it's been a blast writing it and I'll do more in the future for sure!

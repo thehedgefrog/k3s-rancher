@@ -1,7 +1,12 @@
 # Change Log
+## August 31, 2020
+- Release of current version
+
+## August 30, 2020
+- Pre-release version, revisions
 
 ## August 29, 2020
-- Update documentation
+- Updated documentation
 
 ## August 27, 2020
-- Project start, initial commit
+- Repo created, initial commit
